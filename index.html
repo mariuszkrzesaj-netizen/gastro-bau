@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO-FOODTRUCK BUILDER 3D | Konfigurator B2B [White-Label Demo]</title>
-    <!-- Tailwind CSS -->
+    <title>PRO-FOODTRUCK BUILDER | Inteligentny Konfigurator i Generator Produkcyjny B2B [Wersja Demonstracyjna]</title>
+    <meta name="description" content="PRO-FOODTRUCK BUILDER - Uniwersalny system konfiguracji 3D i 2D CAD zabudowy przyczep gastronomicznych dla producentów (DEMO B2B). Bilans faz L1-L3, Sanepid/HACCP, rozkrój profili 1D, karty warsztatowe i wycena.">
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Three.js + OrbitControls -->
+    <!-- Three.js + OrbitControls CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <style>
@@ -20,294 +21,313 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* Subtelny scrollbar dla paneli bocznych */
-        aside::-webkit-scrollbar { width: 5px; }
-        aside::-webkit-scrollbar-track { background: #0f172a; }
-        aside::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans select-none">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans select-none antialiased">
 
-    <!-- NAGŁÓWEK WHITE LABEL -->
+    <!-- GÓRNY PASEK WHITE LABEL -->
     <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur px-4 md:px-6 py-3 flex justify-between items-center no-print sticky top-0 z-50">
         <div class="flex items-center space-x-3">
-            <div class="h-9 px-3 bg-slate-800 border-2 border-dashed border-slate-600 rounded flex items-center justify-center text-xs font-bold text-slate-300">
+            <div class="h-9 px-3 bg-slate-800 border-2 border-dashed border-slate-600 rounded flex items-center justify-center text-xs font-bold text-slate-300 tracking-wider">
                 [ TWOJE LOGO ]
             </div>
             <div>
-                <h1 class="text-sm md:text-base font-bold text-white tracking-wide">PRO-FOODTRUCK BUILDER 3D</h1>
-                <p class="text-[11px] text-slate-400">Konfigurator Technologiczny B2B dla Fabryk i Dystrybutorów Przyczep</p>
+                <div class="flex items-center gap-2">
+                    <h1 class="text-sm md:text-base font-extrabold text-white tracking-wide">PRO-FOODTRUCK <span class="text-amber-400">BUILDER</span></h1>
+                    <span class="text-[9px] uppercase tracking-wider font-extrabold px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">DEMO B2B</span>
+                </div>
+                <p class="text-[11px] text-slate-400">Uniwersalny Generator Technologiczny i CAD dla Producentów Przyczep</p>
             </div>
         </div>
+
         <div class="flex items-center space-x-2">
-            <span class="hidden sm:inline-block text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-medium">
-                Tryb White-Label Demo
-            </span>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition shadow">
-                Drukuj Dokumentację / PDF
+            <!-- Przełącznik widoku 3D vs 2D -->
+            <div class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex text-xs">
+                <button id="btn-view-3d" onclick="ustawWidok('3d')" class="px-3 py-1 rounded font-bold transition bg-amber-500 text-slate-950">
+                    Wizualizacja 3D
+                </button>
+                <button id="btn-view-2d" onclick="ustawWidok('2d')" class="px-3 py-1 rounded font-bold transition text-slate-400 hover:text-white">
+                    Rzut 2D (HACCP)
+                </button>
+            </div>
+
+            <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition shadow flex items-center gap-1.5">
+                <span>Drukuj Kartę Technologiczną / PDF</span>
             </button>
         </div>
     </header>
 
-    <!-- GŁÓWNY OBSZAR ROBOCZY -->
+    <!-- GŁÓWNA STRUKTURA ROBOCZA -->
     <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 gap-0 overflow-hidden no-print">
 
-        <!-- LEWY PANEL: KONFIGURATOR I KATALOG URZĄDZEŃ -->
-        <aside class="lg:col-span-4 xl:col-span-3 bg-slate-900/80 border-r border-slate-800 p-4 space-y-5 overflow-y-auto max-h-[calc(100vh-61px)]">
+        <!-- LEWY PANEL: KONFIGURACJA PLATFORMY I URZĄDZEŃ -->
+        <aside class="lg:col-span-4 xl:col-span-3 bg-slate-900/80 border-r border-slate-800 p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-61px)]">
             
-            <!-- 1. WYBÓR PLATFORMY -->
+            <!-- 1. WYBÓR 4 PLATFORM DŁUGOŚCI -->
             <div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 border-b border-slate-800 pb-1">
-                    1. Wybierz Długość Platformy (Podwozia AL-KO/Knott)
-                </h2>
-                <div class="grid grid-cols-2 gap-2 text-xs">
-                    <label class="p-2.5 rounded-lg border border-slate-800 bg-slate-950 hover:border-blue-500 cursor-pointer transition block">
-                        <input type="radio" name="platform" value="FTB-350-S" onchange="zmienModel()" class="text-blue-600 focus:ring-0">
-                        <div class="font-bold text-slate-200 mt-1">Klasa S (3,5 m)</div>
-                        <div class="text-[10px] text-slate-500">1 oś | DMC: 1350 kg</div>
+                <div class="flex items-center justify-between mb-2 border-b border-slate-800 pb-1">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300">
+                        1. Wariant Podwozia (4 Długości)
+                    </h2>
+                    <span class="text-[10px] text-amber-400 font-mono">AL-KO / Knott</span>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <label class="p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-amber-500/80 cursor-pointer transition block platform-card" id="card-FTB-350-S">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-200">Klasa S (3,5 m) — FTB-350-S</span>
+                            <input type="radio" name="platform" value="FTB-350-S" onchange="zmienModel('FTB-350-S')" class="text-amber-500">
+                        </div>
+                        <div class="text-[11px] text-slate-400 mt-1 flex justify-between font-mono">
+                            <span>1 oś • DMC: 1350 kg</span>
+                            <span class="text-slate-300">Klapa: 240 cm</span>
+                        </div>
                     </label>
 
-                    <label class="p-2.5 rounded-lg border-2 border-blue-500 bg-slate-950 hover:border-blue-500 cursor-pointer transition block" id="label-m">
-                        <input type="radio" name="platform" value="FTB-420-M" checked onchange="zmienModel()" class="text-blue-600 focus:ring-0">
-                        <div class="font-bold text-blue-400 mt-1">Klasa M (4,2 m)</div>
-                        <div class="text-[10px] text-slate-500">Tandem | DMC: 2000 kg</div>
+                    <label class="p-2.5 rounded-xl border-2 border-amber-500 bg-slate-950 hover:border-amber-400 cursor-pointer transition block platform-card" id="card-FTB-420-M">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-amber-400">Klasa M (4,2 m) — FTB-420-M (Bestseller)</span>
+                            <input type="radio" name="platform" value="FTB-420-M" checked onchange="zmienModel('FTB-420-M')" class="text-amber-500">
+                        </div>
+                        <div class="text-[11px] text-slate-400 mt-1 flex justify-between font-mono">
+                            <span>2 osie (Tandem) • DMC: 2000 kg</span>
+                            <span class="text-slate-300">Klapa: 300 cm</span>
+                        </div>
                     </label>
 
-                    <label class="p-2.5 rounded-lg border border-slate-800 bg-slate-950 hover:border-blue-500 cursor-pointer transition block">
-                        <input type="radio" name="platform" value="FTB-500-L" onchange="zmienModel()" class="text-blue-600 focus:ring-0">
-                        <div class="font-bold text-slate-200 mt-1">Klasa L (5,0 m)</div>
-                        <div class="text-[10px] text-slate-500">Tandem | DMC: 2700 kg</div>
+                    <label class="p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-amber-500/80 cursor-pointer transition block platform-card" id="card-FTB-500-L">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-200">Klasa L (5,0 m) — FTB-500-L</span>
+                            <input type="radio" name="platform" value="FTB-500-L" onchange="zmienModel('FTB-500-L')" class="text-amber-500">
+                        </div>
+                        <div class="text-[11px] text-slate-400 mt-1 flex justify-between font-mono">
+                            <span>2 osie (Pro Tandem) • DMC: 2700 kg</span>
+                            <span class="text-slate-300">Klapa: 360 cm</span>
+                        </div>
                     </label>
 
-                    <label class="p-2.5 rounded-lg border border-slate-800 bg-slate-950 hover:border-blue-500 cursor-pointer transition block">
-                        <input type="radio" name="platform" value="FTB-550-XL" onchange="zmienModel()" class="text-blue-600 focus:ring-0">
-                        <div class="font-bold text-slate-200 mt-1">Klasa XL (5,5 m)</div>
-                        <div class="text-[10px] text-slate-500">Tandem | DMC: 3500 kg</div>
+                    <label class="p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-amber-500/80 cursor-pointer transition block platform-card" id="card-FTB-550-XL">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-200">Klasa XL (5,5 m) — FTB-550-XL</span>
+                            <input type="radio" name="platform" value="FTB-550-XL" onchange="zmienModel('FTB-550-XL')" class="text-amber-500">
+                        </div>
+                        <div class="text-[11px] text-slate-400 mt-1 flex justify-between font-mono">
+                            <span>2 osie (Heavy Tandem) • DMC: 3500 kg</span>
+                            <span class="text-slate-300">Klapa: 400 cm</span>
+                        </div>
                     </label>
                 </div>
             </div>
 
-            <!-- 2. PARAMETRY WIZUALNE I KLAPY -->
+            <!-- 2. PARAMETRY ŚCIAN & LAKIERU -->
             <div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 border-b border-slate-800 pb-1">
-                    2. Ściany Sandwich & Wykończenie
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2 border-b border-slate-800 pb-1">
+                    2. Ściany Sandwich & Klapa
                 </h2>
                 <div class="space-y-2 text-xs">
                     <div>
-                        <label class="block text-slate-400 mb-1 text-[11px]">Kolor laminatu GRP (Poszycie):</label>
-                        <select id="kolor-nadwozia" onchange="zaktualizujKolor3D()" class="w-full bg-slate-950 border border-slate-800 rounded p-1.5 text-slate-200 focus:outline-none">
-                            <option value="0xffffff">RAL 9016 (Biały Polarny)</option>
-                            <option value="0x1e293b">RAL 7016 (Antracyt Mat)</option>
-                            <option value="0xf59e0b">RAL 1021 (Żółty Gastronomiczny)</option>
-                            <option value="0x0f172a">RAL 9005 (Czarny Głęboki)</option>
+                        <label class="block text-slate-400 mb-1 text-[11px]">Kolor Poszycia Laminatu GRP (RAL):</label>
+                        <select id="kolor-nadwozia" onchange="zaktualizujKolor3D()" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-amber-400">
+                            <option value="0x1e2024" selected>RAL 9005 (Czarny Głęboki Mat)</option>
+                            <option value="0xffffff">RAL 9016 (Biały Czysty Polarny)</option>
+                            <option value="0x334155">RAL 7016 (Antracyt Szary)</option>
+                            <option value="0xb45309">RAL 1021 (Żółty Gastronomiczny)</option>
+                            <option value="0x991b1b">RAL 3001 (Czerwony Sygnałowy)</option>
                         </select>
                     </div>
-                    <div class="flex items-center justify-between pt-1">
-                        <span class="text-slate-400 text-[11px]">Pozycja klapy wydawczej:</span>
-                        <label class="flex items-center space-x-1.5 cursor-pointer">
-                            <input type="checkbox" id="klapa-otwarta" checked onchange="animujKlape()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span class="text-[11px] text-slate-300">Otwarta</span>
+                    <div class="flex items-center justify-between pt-1 bg-slate-950 p-2 rounded-lg border border-slate-800">
+                        <span class="text-slate-300 text-[11px]">Klapa sprzedażowa 3D:</span>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="klapa-otwarta" checked onchange="animujKlape()" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-0">
+                            <span class="ml-2 text-[11px] text-slate-400">Otwarta (75°)</span>
                         </label>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. URZĄDZENIA GASTRONOMICZNE (ROZBUDOWANY KATALOG) -->
+            <!-- 3. WYPOSAŻENIE GASTRONOMICZNE I AGD -->
             <div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 border-b border-slate-800 pb-1">
-                    3. Wyposażenie Gastronomiczne
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2 border-b border-slate-800 pb-1">
+                    3. Wyposażenie Gastronomiczne (Ciąg Roboczy)
                 </h2>
-
-                <!-- A. OBRÓBKA TERMICZNA -->
-                <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wider mt-2 mb-1.5">A. Obróbka Termiczna</div>
                 <div class="space-y-1.5 text-xs">
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
+                    <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-frytkownica" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Frytkownica 2x8L (YATO YG-04620)</span>
+                            <input type="checkbox" id="agd-frytkownica" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-amber-500">
+                            <span class="text-slate-200">Frytkownica 2x8L (YATO)</span>
                         </div>
-                        <span class="text-[10px] font-mono text-amber-400">6.5 kW (400V)</span>
+                        <span class="text-[11px] font-mono text-amber-400">6.5 kW (L1+L2)</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
+                    <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-grill" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Płyta grillowa chromowana (RedFox FTR-60E)</span>
+                            <input type="checkbox" id="agd-grill" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-amber-500">
+                            <span class="text-slate-200">Płyta grillowa ryflowana (YATO)</span>
                         </div>
-                        <span class="text-[10px] font-mono text-amber-400">6.0 kW (400V)</span>
+                        <span class="text-[11px] font-mono text-amber-400">3.0 kW (L3)</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
+                    <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-kebab" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Opiekacz Gyros/Kebab (Potis E3)</span>
+                            <input type="checkbox" id="agd-chlodnia" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-amber-500">
+                            <span class="text-slate-200">Stół chłodniczy Inox podblatowy</span>
                         </div>
-                        <span class="text-[10px] font-mono text-amber-400">6.0 kW (400V)</span>
+                        <span class="text-[11px] font-mono text-amber-400">0.25 kW (L1)</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
+                    <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-pizza" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Piec do pizzy szamotowy (Bartscher A150)</span>
+                            <input type="checkbox" id="agd-okap" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-amber-500">
+                            <span class="text-slate-200">Okap Inox 2000 mm z turbiną</span>
                         </div>
-                        <span class="text-[10px] font-mono text-amber-400">3.2 kW (230V)</span>
+                        <span class="text-[11px] font-mono text-amber-400">0.35 kW (L3)</span>
                     </label>
 
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
+                    <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-salamander" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Opiekacz kwarcowy Salamander (HENDI)</span>
+                            <input type="checkbox" id="agd-ekspres" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-amber-500">
+                            <span class="text-slate-200">Ekspres kolbowy ciśnieniowy</span>
                         </div>
-                        <span class="text-[10px] font-mono text-amber-400">2.2 kW (230V)</span>
+                        <span class="text-[11px] font-mono text-amber-400">3.3 kW (L2)</span>
+                    </label>
+
+                    <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950 border border-slate-800/80 cursor-pointer hover:border-slate-700 transition">
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" id="opcja-pv" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-amber-500">
+                            <span class="text-slate-200">Pakiet PV Marine ETFE + LiFePO4</span>
+                        </div>
+                        <span class="text-[11px] font-mono text-emerald-400">ECO 24kg</span>
                     </label>
                 </div>
+            </div>
 
-                <!-- B. CHŁODNICTWO -->
-                <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider mt-3 mb-1.5">B. Chłodnictwo & Mroźnictwo</div>
-                <div class="space-y-1.5 text-xs">
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-chlodnia" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Stół chłodniczy Inox (YATO YG-05255)</span>
-                        </div>
-                        <span class="text-[10px] font-mono text-sky-400">0.25 kW (230V)</span>
-                    </label>
-
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-salatkowy" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Stół sałatkowy z nadstawą GN (HENDI)</span>
-                        </div>
-                        <span class="text-[10px] font-mono text-sky-400">0.30 kW (230V)</span>
-                    </label>
-
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-witryna" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Szafa chłodnicza przeszklona napojowa</span>
-                        </div>
-                        <span class="text-[10px] font-mono text-sky-400">0.35 kW (230V)</span>
-                    </label>
+            <!-- 4. MODUŁ SANEPID / HACCP -->
+            <div class="p-3 bg-emerald-950/20 border border-emerald-500/30 rounded-xl space-y-1 text-xs">
+                <div class="flex items-center justify-between text-emerald-400 font-bold">
+                    <span>Moduł Wodno-Sanitarny (HACCP):</span>
+                    <span>Atest PZH</span>
                 </div>
-
-                <!-- C. KAWIARNIA I BAR -->
-                <div class="text-[11px] font-bold text-emerald-400 uppercase tracking-wider mt-3 mb-1.5">C. Strefa Kawiarni i Baru</div>
-                <div class="space-y-1.5 text-xs">
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-ekspres" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Ekspres kolbowy 2-gr (HENDI 225883)</span>
-                        </div>
-                        <span class="text-[10px] font-mono text-emerald-400">3.3 kW (230V)</span>
-                    </label>
-
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-blender" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Blender barmański do lodu (HENDI)</span>
-                        </div>
-                        <span class="text-[10px] font-mono text-emerald-400">1.5 kW (230V)</span>
-                    </label>
-                </div>
-
-                <!-- D. WENTYLACJA & INSTALACJE -->
-                <div class="text-[11px] font-bold text-purple-400 uppercase tracking-wider mt-3 mb-1.5">D. Wentylacja, Woda & PV</div>
-                <div class="space-y-1.5 text-xs">
-                    <label class="flex items-center justify-between p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" id="agd-okap" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                            <span>Okap Inox 2000 mm + turbina promieniowa</span>
-                        </div>
-                        <span class="text-[10px] font-mono text-purple-400">0.35 kW</span>
-                    </label>
-
-                    <div class="p-2 rounded bg-slate-950 border border-slate-800/80 text-[10px] text-slate-400">
-                        • Moduł Sanepid: zlew 2-komorowy + podgrzewacz 10L (1.5 kW)<br>
-                        • Pompa automatyczna ciśnieniowa + 2x kanister 30L
-                    </div>
-
-                    <label class="flex items-center space-x-2 p-2 rounded bg-slate-950 border border-slate-800/80 cursor-pointer">
-                        <input type="checkbox" id="opcja-pv" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                        <span class="text-[11px]">Dachowe panele PV Marine ETFE + bateria LiFePO4 (+24 kg)</span>
-                    </label>
-                </div>
+                <p class="text-[11px] text-slate-300">
+                    • Zlew 2-komorowy Inox + bezdotykowy kran z bojlerem 10L (1.5 kW L2)<br>
+                    • Automatyczna pompa wody 12V + 2 atestowane kanistry 30L
+                </p>
             </div>
 
         </aside>
 
-        <!-- ŚRODEK: TRÓJWYMIAROWY WIDOK PRZYCZEPY -->
-        <section class="lg:col-span-5 xl:col-span-6 relative bg-slate-950 flex flex-col min-h-[350px] lg:min-h-0">
+        <!-- ŚRODEK: WIZUALIZACJA 3D LUB RZUT 2D CAD -->
+        <section class="lg:col-span-5 xl:col-span-6 relative bg-slate-950 flex flex-col min-h-[380px] lg:min-h-0">
+            <!-- Widok 3D -->
             <div id="canvas3d-container" class="w-full h-full flex-grow"></div>
-            
-            <div class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur border border-slate-800 rounded px-3 py-1.5 text-[11px] text-slate-400 pointer-events-none">
-                Sterowanie: lewy przycisk / dotyk = obrót | prawy / 2 palce = przesunięcie | scroll = zoom
+
+            <!-- Widok 2D CAD (Domyślnie ukryty) -->
+            <div id="view-2d-container" class="hidden w-full h-full flex-grow p-6 flex flex-col justify-center items-center bg-slate-950 relative">
+                <div class="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-2xl relative">
+                    <div class="flex justify-between items-center mb-3 border-b border-slate-800 pb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-400 font-mono" id="cad-title">Rzut 2D CAD — Klasa M (4,2 m)</span>
+                        <span class="text-[11px] bg-blue-500/20 text-blue-300 border border-blue-500/40 px-2 py-0.5 rounded font-mono">Ścieżka Sanitarna: Dirty-to-Clean</span>
+                    </div>
+
+                    <!-- Schemat rzutu poziomego -->
+                    <div id="cad-schemat" class="border-2 border-dashed border-slate-700 bg-slate-950/80 rounded-xl p-4 h-64 flex flex-col justify-between relative overflow-hidden font-mono text-xs">
+                        <!-- Ściana tylna: Strefa obróbki termicznej (brudna) -->
+                        <div class="bg-red-950/40 border border-red-500/40 p-2 rounded flex justify-between items-center text-red-300 text-[11px]">
+                            <span class="font-bold">[ STREFA BRUDNA: Obróbka Termiczna & Zlew HACCP ]</span>
+                            <span class="text-[10px] text-slate-400">Głębokość: 700 mm</span>
+                        </div>
+
+                        <!-- Korytarz roboczy ze strzałką kierunkową HACCP -->
+                        <div class="flex items-center justify-center gap-3 text-slate-400 text-xs my-auto">
+                            <span class="text-emerald-400 font-bold text-[11px] bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
+                                Ciąg komunikacyjny jednokierunkowy &rarr; brak krzyżowania dróg
+                            </span>
+                        </div>
+
+                        <!-- Ściana przednia z oknem wydawczym (strefa czysta) -->
+                        <div class="bg-emerald-950/40 border border-emerald-500/40 p-2 rounded flex justify-between items-center text-emerald-300 text-[11px]">
+                            <span class="font-bold">[ STREFA CZYSTA: Wydawanie Potraw & Kasa POS ]</span>
+                            <span class="text-[10px] text-slate-400" id="cad-klapa-label">Klapa: 3000 mm</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mt-3 text-[11px] text-slate-400 font-mono">
+                        <span id="cad-dim-l">Długość wewn.: 4120 mm</span>
+                        <span id="cad-dim-w">Szerokość wewn.: 2120 mm</span>
+                        <span class="text-emerald-400 font-bold">Zgodność Sanepid: 100%</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur border border-slate-800 rounded px-3 py-1.5 text-[11px] font-mono text-blue-400 pointer-events-none" id="wymiar-badge">
-                4200 x 2200 x 2200 mm
+            <!-- PŁYWAJĄCY WSKAŹNIK GABARYTÓW I STEROWANIA 3D -->
+            <div id="controls-hint" class="absolute bottom-3 left-3 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-lg px-3 py-1.5 text-[11px] text-slate-400 pointer-events-none">
+                Sterowanie 3D: lewy przycisk / dotyk = obrót | prawy = przesunięcie | rolka = zoom
+            </div>
+
+            <div class="absolute top-3 right-3 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-lg px-3 py-1.5 text-xs font-mono text-amber-400 pointer-events-none" id="wymiar-badge">
+                4200 × 2200 × 2200 mm • Tandem
             </div>
         </section>
 
-        <!-- PRAWY PANEL: WYNIKI TECHNOLOGICZNE NA ŻYWO -->
+        <!-- PRAWY PANEL: BILANS TECHNOLOGICZNY I KARTY PRODUKCYJNE -->
         <aside class="lg:col-span-3 xl:col-span-3 bg-slate-900/80 border-l border-slate-800 p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-61px)]">
             
             <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 border-b border-slate-800 pb-1">
-                Karty Technologiczne Montażu
+                Karty Technologiczne B2B
             </h2>
 
-            <!-- KAFLE MAS I NACISKU -->
-            <div class="space-y-2">
-                <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
-                    <span class="text-[10px] text-slate-400 uppercase">Masa Rzeczywista / DMC</span>
-                    <div id="stat-masa" class="text-lg font-bold text-emerald-400">-- / -- kg</div>
-                    <span id="stat-zapas" class="text-[11px] text-slate-500">Zapas: -- kg</span>
+            <!-- KAFLE KONTROLNE (MASA, MOC, HAK) -->
+            <div class="space-y-2.5">
+                <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Masa Rzeczywista / DMC</span>
+                    <div id="stat-masa" class="text-xl font-extrabold text-emerald-400 mt-0.5">-- / -- kg</div>
+                    <span id="stat-zapas" class="text-xs text-slate-400">Zapas ładowności: -- kg</span>
                 </div>
 
-                <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
-                    <span class="text-[10px] text-slate-400 uppercase">Moc Przyłączeniowa</span>
-                    <div id="stat-moc" class="text-lg font-bold text-amber-400">-- kW</div>
-                    <span id="stat-przylacze" class="text-[11px] text-slate-500">Złącze CEE</span>
+                <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Moc Całkowita / Złącze CEE</span>
+                    <div id="stat-moc" class="text-xl font-extrabold text-amber-400 mt-0.5">-- kW</div>
+                    <span id="stat-przylacze" class="text-xs text-slate-400">Wymagane złącze CEE 400V</span>
                 </div>
 
-                <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
-                    <span class="text-[10px] text-slate-400 uppercase">Szacowany Nacisk na Hak (S)</span>
-                    <div id="stat-hak" class="text-lg font-bold text-blue-400">-- kg</div>
-                    <span id="stat-hak-opis" class="text-[11px] text-slate-500">Optymalny dla podwozia</span>
+                <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+                    <span class="text-[10px] text-slate-400 uppercase tracking-wider">Nacisk Pionowy na Hak (S)</span>
+                    <div id="stat-hak" class="text-xl font-extrabold text-blue-400 mt-0.5">-- kg</div>
+                    <span id="stat-hak-opis" class="text-xs text-slate-400">Wskaźnik stateczności V</span>
                 </div>
             </div>
 
-            <!-- BALANS FAZ L1-L3 -->
-            <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg">
-                <div class="flex justify-between items-center mb-1">
-                    <span class="text-[11px] font-bold text-slate-300">Rozdzielnica Hager DIN</span>
-                    <span id="stat-asymetria" class="text-[10px] text-emerald-400 font-mono">0.0 kW</span>
+            <!-- BILANS FAZ L1-L3 (ROZDZIELNICA HAGER) -->
+            <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl space-y-2">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-200">Zbalansowanie Faz L1-L3</span>
+                    <span id="stat-asymetria" class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Asymetria: 0.0 kW</span>
                 </div>
-                <div class="grid grid-cols-3 gap-1 font-mono text-center text-[10px] pt-1">
-                    <div class="bg-slate-900 p-1 rounded">
-                        <div class="text-slate-500">L1</div>
-                        <div id="faza-l1" class="font-bold text-white">-- kW</div>
+                <div class="grid grid-cols-3 gap-1.5 font-mono text-center text-xs pt-1">
+                    <div class="bg-slate-900 border border-slate-800 p-2 rounded-lg">
+                        <div class="text-[10px] text-slate-400">FAZA L1</div>
+                        <div id="faza-l1" class="font-bold text-white mt-0.5">-- kW</div>
                     </div>
-                    <div class="bg-slate-900 p-1 rounded">
-                        <div class="text-slate-500">L2</div>
-                        <div id="faza-l2" class="font-bold text-white">-- kW</div>
+                    <div class="bg-slate-900 border border-slate-800 p-2 rounded-lg">
+                        <div class="text-[10px] text-slate-400">FAZA L2</div>
+                        <div id="faza-l2" class="font-bold text-white mt-0.5">-- kW</div>
                     </div>
-                    <div class="bg-slate-900 p-1 rounded">
-                        <div class="text-slate-500">L3</div>
-                        <div id="faza-l3" class="font-bold text-white">-- kW</div>
+                    <div class="bg-slate-900 border border-slate-800 p-2 rounded-lg">
+                        <div class="text-[10px] text-slate-400">FAZA L3</div>
+                        <div id="faza-l3" class="font-bold text-white mt-0.5">-- kW</div>
                     </div>
                 </div>
             </div>
 
-            <!-- NASTAWY DLA PIONOWEJ RAMY POCHYŁEJ -->
-            <div class="bg-slate-950 border border-slate-800 p-3 rounded-lg text-[11px] font-mono">
-                <span class="text-[10px] font-bold text-amber-400 uppercase block mb-1">Nastawy Piły Pionowej (Ściana Sandwich)</span>
-                <div id="zderzak-x1">• X1: -- mm</div>
-                <div id="zderzak-x2">• X2: -- mm</div>
-                <div>• Y1: 900 mm | Y2: 2000 mm</div>
-                <div id="zderzak-okno" class="text-slate-400 text-[10px] mt-1">Otwór klapy: -- mm</div>
-                <div class="mt-2 text-[9px] text-blue-400 border-t border-slate-800 pt-1">
-                    Procedura 4 otworów: otwornica fi 30 mm (R15 w narożach).
+            <!-- NASTAWY ZDERZAKÓW DLA PIŁY PIONOWEJ (KARTA CIĘCIA SANDWICH) -->
+            <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-xl text-xs font-mono space-y-1.5">
+                <div class="flex items-center justify-between text-amber-400 font-bold border-b border-slate-800 pb-1">
+                    <span>Nastawy Zderzaków Piły Pionowej:</span>
+                    <span class="text-[10px] bg-amber-500/10 text-amber-300 px-1.5 py-0.5 rounded">Baza (0,0)</span>
                 </div>
+                <div id="zderzak-x1" class="text-slate-200">• Zderzak lewy (X1): -- mm</div>
+                <div id="zderzak-x2" class="text-slate-200">• Zderzak prawy (X2): -- mm</div>
+                <div class="text-slate-400">• Zderzaki osi Y: Y1=900 mm | Y2=2000 mm</div>
+                <div id="zderzak-okno" class="text-amber-400/90 text-[11px] pt-1 border-t border-slate-800/80">Otwór klapy: -- mm</div>
             </div>
 
         </aside>
@@ -315,14 +335,14 @@
     </main>
 
     <!-- ARKUSZ WYDRUKU WHITE LABEL (A4 DLA WARSZTATU I KLIENTA) -->
-    <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto">
+    <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto font-sans">
         <div class="border-b-2 border-black pb-4 mb-6 flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold uppercase tracking-wider">[ NAZWA TWOJEJ FIRMY / PRODUCENTA ]</h1>
-                <p class="text-sm font-semibold">Karta Technologiczna Przyczepy Gastronomicznej B2B</p>
-                <p class="text-xs text-gray-600">ul. Przemysłowa 1, 00-000 Twoje Miasto | kontakt@twojadomena.pl</p>
+                <p class="text-sm font-semibold">Karta Technologiczna Prefabrykacji i Montażu Przyczepy Gastronomicznej</p>
+                <p class="text-xs text-gray-600">ul. Przemysłowa 1, 00-000 Twoje Miasto | +48 000 000 000 | kontakt@twojadomena.pl</p>
             </div>
-            <div class="border-2 border-dashed border-gray-400 p-3 text-center text-xs font-bold text-gray-500 uppercase">
+            <div class="border-2 border-dashed border-gray-500 p-3 text-center text-xs font-bold text-gray-600 uppercase">
                 [ TWOJE LOGO ]
             </div>
         </div>
@@ -345,28 +365,32 @@
                 <td id="print-hak" class="border border-gray-300 p-2">--</td>
             </tr>
             <tr>
-                <td class="border border-gray-300 p-2 font-medium">Moc Całkowita / Przyłącze Zewnętrzne</td>
+                <td class="border border-gray-300 p-2 font-medium">Moc Całkowita / Przyłącze CEE</td>
                 <td id="print-moc" class="border border-gray-300 p-2">--</td>
             </tr>
             <tr>
-                <td class="border border-gray-300 p-2 font-medium">Zbalansowanie Faz L1 / L2 / L3 (DIN)</td>
+                <td class="border border-gray-300 p-2 font-medium">Zbalansowanie Faz Rozdzielnicy (DIN)</td>
                 <td id="print-fazy" class="border border-gray-300 p-2 font-mono">--</td>
             </tr>
             <tr>
                 <td class="border border-gray-300 p-2 font-medium">Nastawy Piły Pionowej (Ściana Sandwich)</td>
                 <td id="print-pila" class="border border-gray-300 p-2 font-mono">--</td>
             </tr>
+            <tr>
+                <td class="border border-gray-300 p-2 font-medium">Ścieżka Sanitarna HACCP / Sanepid</td>
+                <td class="border border-gray-300 p-2 font-bold text-emerald-700">ZATWIERDZONA (Czysta/Brudna rozdzielona, atest PZH)</td>
+            </tr>
         </table>
 
-        <div class="border-t border-gray-300 pt-4 text-xs text-gray-500 flex justify-between">
+        <div class="border-t border-gray-400 pt-4 text-xs text-gray-500 flex justify-between">
             <span>System: PRO-FOODTRUCK BUILDER B2B [Wersja Demonstracyjna]</span>
-            <span>Status: ZATWIERDZONE DO REALIZACJI</span>
+            <span>Status: GENERATOR TECHNOLOGICZNY B2B DLA ZAKŁADÓW PRODUKCYJNYCH</span>
         </div>
     </div>
 
-    <!-- SILNIK THREE.JS I KALKULATOR TECHNOLOGICZNY -->
+    <!-- SKRYPT LOGIKI THREE.JS, 2D I OBLICZEŃ -->
     <script>
-        // 1. DANE 4 PLATFORM
+        // 1. SPECYFIKACJA 4 PLATFORM
         const PLATFORMY = {
             "FTB-350-S": { nazwa: "Klasa S (3,5 m) Single Axle AL-KO", dmc: 1350, masaPusta: 720, osie: 1, x1: 550, dlugoscKlapy: 2400, dl: 3.5, sz: 2.2, wys: 2.2 },
             "FTB-420-M": { nazwa: "Klasa M (4,2 m) Tandem AL-KO/Knott", dmc: 2000, masaPusta: 980, osie: 2, x1: 600, dlugoscKlapy: 3000, dl: 4.2, sz: 2.2, wys: 2.2 },
@@ -374,21 +398,22 @@
             "FTB-550-XL": { nazwa: "Klasa XL (5,5 m) Heavy Tandem", dmc: 3500, masaPusta: 1320, osie: 2, x1: 750, dlugoscKlapy: 4000, dl: 5.5, sz: 2.3, wys: 2.25 }
         };
 
-        // 2. SCENA 3D (THREE.JS)
         let scene, camera, renderer, controls;
         let kontenerGrupa, klapaObiekt;
         let aktualnyModel = PLATFORMY["FTB-420-M"];
+        let aktualnyWidok = '3d';
 
+        // 2. INICJALIZACJA THREE.JS
         function init3D() {
             const container = document.getElementById('canvas3d-container');
-            const width = container.clientWidth;
+            const width = container.clientWidth || 600;
             const height = container.clientHeight || 450;
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x020617);
 
             camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-            camera.position.set(6, 4, 7);
+            camera.position.set(6.5, 4.2, 7.5);
 
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(width, height);
@@ -399,22 +424,21 @@
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.maxPolarAngle = Math.PI / 2 + 0.1;
+            controls.maxPolarAngle = Math.PI / 2 + 0.05;
 
             // Oświetlenie
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-            scene.add(ambientLight);
+            scene.add(new THREE.AmbientLight(0xffffff, 0.7));
 
             const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
             dirLight.position.set(8, 12, 10);
             scene.add(dirLight);
 
-            const dirLight2 = new THREE.DirectionalLight(0x38bdf8, 0.4);
-            dirLight2.position.set(-8, 5, -8);
-            scene.add(dirLight2);
+            const fillLight = new THREE.DirectionalLight(0x38bdf8, 0.4);
+            fillLight.position.set(-8, 6, -8);
+            scene.add(fillLight);
 
-            // Siatka podłogi
-            const gridHelper = new THREE.GridHelper(12, 24, 0x3b82f6, 0x1e293b);
+            // Siatka warsztatowa
+            const gridHelper = new THREE.GridHelper(12, 24, 0xf59e0b, 0x1e293b);
             scene.add(gridHelper);
 
             kontenerGrupa = new THREE.Group();
@@ -428,19 +452,24 @@
 
         function onWindowResize() {
             const container = document.getElementById('canvas3d-container');
-            if (!container) return;
-            camera.aspect = container.clientWidth / container.clientHeight;
+            if (!container || !renderer || !camera) return;
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            if (w === 0 || h === 0) return;
+            camera.aspect = w / h;
             camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setSize(w, h);
         }
 
         function animate() {
             requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
+            if (controls) controls.update();
+            if (renderer && scene && camera && aktualnyWidok === '3d') {
+                renderer.render(scene, camera);
+            }
         }
 
-        // 3. GENEROWANIE BRYŁY PRZYCZEPY 3D
+        // 3. GENEROWANIE PARAMETRYCZNEGO MODELU 3D
         function zbudujModel3D() {
             while (kontenerGrupa.children.length > 0) {
                 kontenerGrupa.remove(kontenerGrupa.children[0]);
@@ -451,53 +480,50 @@
             const H = aktualnyModel.wys;
             const kolorHex = parseInt(document.getElementById('kolor-nadwozia').value);
 
-            const matSciany = new THREE.MeshStandardMaterial({ color: kolorHex, roughness: 0.3, metalness: 0.1 });
+            const matSciany = new THREE.MeshStandardMaterial({ color: kolorHex, roughness: 0.35, metalness: 0.1 });
             const matProfile = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.2, metalness: 0.8 });
             const matRama = new THREE.MeshStandardMaterial({ color: 0x334155, roughness: 0.5, metalness: 0.5 });
             const matOpony = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.9 });
             const matBlat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, roughness: 0.2, metalness: 0.9 });
 
-            const wysZawieszenia = 0.55;
+            const zawieszenieY = 0.55;
 
-            // Ściany Sandwich
-            const korpusGeo = new THREE.BoxGeometry(L, H, W);
-            const korpus = new THREE.Mesh(korpusGeo, matSciany);
-            korpus.position.set(0, H / 2 + wysZawieszenia, 0);
+            // Korpus przyczepy
+            const korpus = new THREE.Mesh(new THREE.BoxGeometry(L, H, W), matSciany);
+            korpus.position.set(0, H / 2 + zawieszenieY, 0);
             kontenerGrupa.add(korpus);
 
-            // Profile Narożne
-            const krawedzieGeo = new THREE.BoxGeometry(L + 0.04, H + 0.04, W + 0.04);
-            const krawedzieWire = new THREE.LineSegments(
-                new THREE.EdgesGeometry(krawedzieGeo),
+            // Narożniki Aluminiowe R35
+            const wire = new THREE.LineSegments(
+                new THREE.EdgesGeometry(new THREE.BoxGeometry(L + 0.04, H + 0.04, W + 0.04)),
                 new THREE.LineBasicMaterial({ color: 0x94a3b8, linewidth: 2 })
             );
-            krawedzieWire.position.copy(korpus.position);
-            kontenerGrupa.add(krawedzieWire);
+            wire.position.copy(korpus.position);
+            kontenerGrupa.add(wire);
 
-            // Dyszel stalowy AL-KO w kształcie litery V
+            // Stalowy Dyszel V AL-KO
             const dyszelGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.4);
             const dyszelL = new THREE.Mesh(dyszelGeo, matRama);
             dyszelL.rotation.z = Math.PI / 2;
             dyszelL.rotation.y = 0.25;
-            dyszelL.position.set(L / 2 + 0.65, wysZawieszenia - 0.1, 0.25);
+            dyszelL.position.set(L / 2 + 0.65, zawieszenieY - 0.1, 0.25);
             kontenerGrupa.add(dyszelL);
 
             const dyszelP = new THREE.Mesh(dyszelGeo, matRama);
             dyszelP.rotation.z = Math.PI / 2;
             dyszelP.rotation.y = -0.25;
-            dyszelP.position.set(L / 2 + 0.65, wysZawieszenia - 0.1, -0.25);
+            dyszelP.position.set(L / 2 + 0.65, zawieszenieY - 0.1, -0.25);
             kontenerGrupa.add(dyszelP);
 
-            // Hak kulowy
-            const hakGeo = new THREE.SphereGeometry(0.06, 16, 16);
-            const hak = new THREE.Mesh(hakGeo, matProfile);
-            hak.position.set(L / 2 + 1.35, wysZawieszenia - 0.08, 0);
+            // Zaczep kulowy haka
+            const hak = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 16), matProfile);
+            hak.position.set(L / 2 + 1.35, zawieszenieY - 0.08, 0);
             kontenerGrupa.add(hak);
 
-            // Osie i koła (1 oś lub Tandem)
+            // Układ jezdny: 1 Oś lub Tandem
             const oponaGeo = new THREE.CylinderGeometry(0.28, 0.28, 0.18, 24);
             const osieIlosc = aktualnyModel.osie;
-            const rozstawTandem = 0.7;
+            const rozstawTandem = 0.72;
 
             for (let strona = -1; strona <= 1; strona += 2) {
                 if (osieIlosc === 1) {
@@ -515,28 +541,27 @@
                 }
             }
 
-            // Otwór i ruchoma klapa handlowa
+            // Otwór i ruchoma klapa sprzedażowa
             const dlKlapy3D = (aktualnyModel.dlugoscKlapy / 1000);
             const wysKlapy3D = 1.1;
 
             klapaObiekt = new THREE.Group();
             const klapaMesh = new THREE.Mesh(
                 new THREE.BoxGeometry(dlKlapy3D, wysKlapy3D, 0.04),
-                new THREE.MeshStandardMaterial({ color: kolorHex, roughness: 0.3 })
+                new THREE.MeshStandardMaterial({ color: kolorHex, roughness: 0.35 })
             );
             klapaMesh.position.set(0, -wysKlapy3D / 2, 0);
             klapaObiekt.add(klapaMesh);
 
-            klapaObiekt.position.set(0, wysZawieszenia + 0.9 + wysKlapy3D, W / 2 + 0.02);
+            klapaObiekt.position.set(0, zawieszenieY + 0.9 + wysKlapy3D, W / 2 + 0.02);
             kontenerGrupa.add(klapaObiekt);
 
-            // Blat technologiczny Inox AISI 304 wzdłuż klapy
-            const blatWydawczy = new THREE.Mesh(new THREE.BoxGeometry(dlKlapy3D + 0.2, 0.05, 0.6), matBlat);
-            blatWydawczy.position.set(0, wysZawieszenia + 0.88, W / 2 - 0.32);
-            kontenerGrupa.add(blatWydawczy);
+            // Blat ze stali nierdzewnej Inox
+            const blat = new THREE.Mesh(new THREE.BoxGeometry(dlKlapy3D + 0.2, 0.05, 0.6), matBlat);
+            blat.position.set(0, zawieszenieY + 0.88, W / 2 - 0.32);
+            kontenerGrupa.add(blat);
 
-            // Aktualizacja wskaźnika wymiaru
-            document.getElementById('wymiar-badge').innerText = `${Math.round(L*1000)} x ${Math.round(W*1000)} x ${Math.round(H*1000)} mm`;
+            document.getElementById('wymiar-badge').innerText = `${Math.round(L*1000)} × ${Math.round(W*1000)} × ${Math.round(H*1000)} mm • ${osieIlosc === 1 ? '1 Oś' : 'Tandem'}`;
 
             animujKlape();
         }
@@ -551,79 +576,89 @@
             zbudujModel3D();
         }
 
-        function zmienModel() {
-            const wybranaKlucz = document.querySelector('input[name="platform"]:checked').value;
-            aktualnyModel = PLATFORMY[wybranaKlucz];
+        function zmienModel(klucz) {
+            aktualnyModel = PLATFORMY[klucz];
+            
+            // Styl kart wyboru
+            document.querySelectorAll('.platform-card').forEach(el => {
+                el.classList.remove('border-2', 'border-amber-500');
+                el.classList.add('border', 'border-slate-800');
+            });
+            const aktywna = document.getElementById(`card-${klucz}`);
+            if (aktywna) {
+                aktywna.classList.remove('border-slate-800');
+                aktywna.classList.add('border-2', 'border-amber-500');
+            }
+
             zbudujModel3D();
             przeliczWszystko();
+            zaktualizujCAD2D();
         }
 
-        // 4. SILNIK OBLICZENIOWY PARAMETRÓW B2B
+        // 4. PRZEŁĄCZNIK WIDOKU 3D VS 2D CAD
+        function ustawWidok(tryb) {
+            aktualnyWidok = tryb;
+            const container3d = document.getElementById('canvas3d-container');
+            const container2d = document.getElementById('view-2d-container');
+            const btn3d = document.getElementById('btn-view-3d');
+            const btn2d = document.getElementById('btn-view-2d');
+            const hint = document.getElementById('controls-hint');
+
+            if (tryb === '3d') {
+                container3d.classList.remove('hidden');
+                container2d.classList.add('hidden');
+                hint.classList.remove('hidden');
+                btn3d.className = 'px-3 py-1 rounded font-bold transition bg-amber-500 text-slate-950';
+                btn2d.className = 'px-3 py-1 rounded font-bold transition text-slate-400 hover:text-white';
+                onWindowResize();
+            } else {
+                container3d.classList.add('hidden');
+                container2d.classList.remove('hidden');
+                hint.classList.add('hidden');
+                btn2d.className = 'px-3 py-1 rounded font-bold transition bg-amber-500 text-slate-950';
+                btn3d.className = 'px-3 py-1 rounded font-bold transition text-slate-400 hover:text-white';
+                zaktualizujCAD2D();
+            }
+        }
+
+        function zaktualizujCAD2D() {
+            const p = aktualnyModel;
+            document.getElementById('cad-title').innerText = `Rzut 2D CAD — ${p.nazwa}`;
+            document.getElementById('cad-klapa-label').innerText = `Klapa: ${p.dlugoscKlapy} mm`;
+            document.getElementById('cad-dim-l').innerText = `Długość wewn.: ${Math.round(p.dl * 1000 - 80)} mm`;
+            document.getElementById('cad-dim-w').innerText = `Szerokość wewn.: ${Math.round(p.sz * 1000 - 80)} mm`;
+        }
+
+        // 5. SILNIK OBLICZENIOWY INŻYNIERII B2B
         function przeliczWszystko() {
             const p = aktualnyModel;
 
-            // Masy (kg)
-            let masa = p.masaPusta + 22 + 14 + 30; // Sanepid + elektryka + woda
+            let masa = p.masaPusta + 22 + 14 + 30; // moduł Sanepid + Hager DIN + kanistry z wodą
             
-            // Fazy (kW)
-            let fazaL1 = 0.2; // LED + pompa wody
+            let fazaL1 = 0.2; // LED + pompa 12V
             let fazaL2 = 1.5; // Bojler 10L
-            let fazaL3 = 0.35; // Obwód chłodniczy bazowy
+            let fazaL3 = 0.35; // Wentylacja bazowa
 
-            // A. Termika
             if (document.getElementById('agd-frytkownica').checked) {
                 masa += 18.5;
                 fazaL1 += 3.25;
                 fazaL2 += 3.25;
             }
             if (document.getElementById('agd-grill').checked) {
-                masa += 44.0;
-                fazaL2 += 3.0;
+                masa += 24.0;
                 fazaL3 += 3.0;
             }
-            if (document.getElementById('agd-kebab').checked) {
-                masa += 32.0;
-                fazaL1 += 2.0;
-                fazaL2 += 2.0;
-                fazaL3 += 2.0;
-            }
-            if (document.getElementById('agd-pizza').checked) {
-                masa += 45.0;
-                fazaL1 += 3.2;
-            }
-            if (document.getElementById('agd-salamander').checked) {
-                masa += 16.0;
-                fazaL3 += 2.2;
-            }
-
-            // B. Chłodnictwo
             if (document.getElementById('agd-chlodnia').checked) {
                 masa += 72.0;
                 fazaL1 += 0.25;
             }
-            if (document.getElementById('agd-salatkowy').checked) {
-                masa += 68.0;
-                fazaL3 += 0.30;
-            }
-            if (document.getElementById('agd-witryna').checked) {
-                masa += 55.0;
-                fazaL2 += 0.35;
-            }
-
-            // C. Kawiarnia i Bar
-            if (document.getElementById('agd-ekspres').checked) {
-                masa += 55.0;
-                fazaL2 += 3.3;
-            }
-            if (document.getElementById('agd-blender').checked) {
-                masa += 6.5;
-                fazaL1 += 1.5;
-            }
-
-            // D. Wentylacja i PV
             if (document.getElementById('agd-okap').checked) {
                 masa += 38.0;
                 fazaL3 += 0.35;
+            }
+            if (document.getElementById('agd-ekspres').checked) {
+                masa += 55.0;
+                fazaL2 += 3.3;
             }
             if (document.getElementById('opcja-pv').checked) {
                 masa += 24.0;
@@ -639,33 +674,32 @@
             const x1 = p.x1;
             const x2 = p.x1 + p.dlugoscKlapy;
 
-            // UI Dashboardu
+            // Wyświetlenie statystyk
             document.getElementById('stat-masa').innerText = `${Math.round(masa)} / ${p.dmc} kg`;
             document.getElementById('stat-zapas').innerText = `Zapas ładowności: ${zapas} kg`;
             document.getElementById('stat-moc').innerText = `${mocCalkowita} kW`;
             document.getElementById('stat-przylacze').innerText = mocCalkowita > 11 ? "Wymagane: CEE 400V 32A" : "Wymagane: CEE 400V 16A";
             document.getElementById('stat-hak').innerText = `${hakKg} kg`;
-            document.getElementById('stat-hak-opis').innerText = p.osie === 1 ? "1-oś (~7% masy)" : "Tandem (~5.5% masy)";
+            document.getElementById('stat-hak-opis').innerText = p.osie === 1 ? "1-oś (~7% masy własnej)" : "Tandem (~5.5% masy własnej)";
 
             document.getElementById('faza-l1').innerText = `${fazaL1.toFixed(2)} kW`;
             document.getElementById('faza-l2').innerText = `${fazaL2.toFixed(2)} kW`;
             document.getElementById('faza-l3').innerText = `${fazaL3.toFixed(2)} kW`;
             document.getElementById('stat-asymetria').innerText = `Asymetria: ${asymetria} kW`;
 
-            document.getElementById('zderzak-x1').innerText = `• X1: ${x1} mm`;
-            document.getElementById('zderzak-x2').innerText = `• X2: ${x2} mm`;
-            document.getElementById('zderzak-okno').innerText = `Otwór klapy: ${p.dlugoscKlapy} x 1100 mm`;
+            document.getElementById('zderzak-x1').innerText = `• Zderzak lewy (X1): ${x1} mm`;
+            document.getElementById('zderzak-x2').innerText = `• Zderzak prawy (X2): ${x2} mm`;
+            document.getElementById('zderzak-okno').innerText = `Otwór klapy: ${p.dlugoscKlapy} × 1100 mm`;
 
-            // Arkusz A4
+            // Karta wydruku A4
             document.getElementById('print-model').innerText = p.nazwa;
-            document.getElementById('print-masa').innerText = `${Math.round(masa)} kg / ${p.dmc} kg (Ładowność: ${zapas} kg)`;
+            document.getElementById('print-masa').innerText = `${Math.round(masa)} kg / ${p.dmc} kg (Ładowność zapasowa: ${zapas} kg)`;
             document.getElementById('print-hak').innerText = `${hakKg} kg`;
             document.getElementById('print-moc').innerText = `${mocCalkowita} kW (${mocCalkowita > 11 ? 'CEE 400V 32A' : 'CEE 400V 16A'})`;
-            document.getElementById('print-fazy').innerText = `L1: ${fazaL1.toFixed(2)} kW | L2: ${fazaL2.toFixed(2)} kW | L3: ${fazaL3.toFixed(2)} kW`;
-            document.getElementById('print-pila').innerText = `X1=${x1} mm, X2=${x2} mm | Y1=900 mm, Y2=2000 mm (Klapa: ${p.dlugoscKlapy}x1100 mm)`;
+            document.getElementById('print-fazy').innerText = `L1: ${fazaL1.toFixed(2)} kW | L2: ${fazaL2.toFixed(2)} kW | L3: ${fazaL3.toFixed(2)} kW (Asymetria: ${asymetria} kW)`;
+            document.getElementById('print-pila').innerText = `X1=${x1} mm, X2=${x2} mm | Y1=900 mm, Y2=2000 mm (Otwór klapy: ${p.dlugoscKlapy}×1100 mm)`;
         }
 
-        // Start
         window.addEventListener('load', () => {
             init3D();
             przeliczWszystko();
