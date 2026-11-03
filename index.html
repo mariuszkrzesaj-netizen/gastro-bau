@@ -19,145 +19,237 @@
     <!-- GÓRNY PASEK WHITE LABEL -->
     <header class="border-b border-slate-800 bg-slate-950 px-4 md:px-8 py-4 flex justify-between items-center no-print">
         <div class="flex items-center space-x-3 md:space-x-4">
-            <!-- Neutralny placeholder logo -->
             <div class="h-10 px-4 bg-slate-800 border-2 border-dashed border-slate-600 rounded flex items-center justify-center text-xs font-bold text-slate-300 tracking-wider">
                 [ TWOJE LOGO ]
             </div>
             <div>
                 <h1 class="text-base md:text-lg font-bold tracking-wide text-white">PRO-FOODTRUCK BUILDER B2B</h1>
-                <p class="text-xs text-slate-400">Uniwersalny Konfigurator i Generator Technologiczny dla Fabryk Przyczep</p>
+                <p class="text-xs text-slate-400">Kreator i Generator Technologiczny dla Fabryk Przyczep</p>
             </div>
         </div>
         <div class="flex items-center space-x-2 md:space-x-3">
-            <span class="hidden sm:inline-block text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-medium">
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-medium">
                 Tryb White-Label Demo
             </span>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-lg transition shadow">
-                Drukuj Dokumentację / PDF
-            </button>
         </div>
     </header>
 
-    <!-- GŁÓWNA PRZESTRZEŃ ROBOCZA -->
-    <main class="max-w-7xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 flex-grow w-full no-print">
-        
-        <!-- KOLUMNA 1: KONFIGURACJA ZAMÓWIENIA -->
-        <div class="lg:col-span-1 bg-slate-950 border border-slate-800 rounded-xl p-5 space-y-6">
-            
-            <!-- 4 KLIKALNE WARIANTY DŁUGOŚCI PRZYCZEP -->
-            <div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2 mb-3">
-                    1. Wybierz Wariant Podwozia i Długości
-                </h2>
-                <div class="space-y-2.5">
-                    <label class="block p-3 rounded-lg border border-slate-800 bg-slate-900 hover:border-blue-500 cursor-pointer transition">
-                        <input type="radio" name="platform" value="FTB-350-S" onchange="przeliczWszystko()" class="text-blue-600 focus:ring-0">
-                        <span class="font-bold ml-2 text-sm text-slate-200">Klasa S — 3,5 m (Single Axle)</span>
-                        <div class="text-xs text-slate-400 ml-6 flex justify-between mt-1">
-                            <span>DMC: 1 350 kg | 1 oś</span>
-                            <span>Klapa: 2 400 mm</span>
-                        </div>
-                    </label>
-
-                    <label class="block p-3 rounded-lg border border-blue-500/80 bg-slate-900 hover:border-blue-500 cursor-pointer transition">
-                        <input type="radio" name="platform" value="FTB-420-M" checked onchange="przeliczWszystko()" class="text-blue-600 focus:ring-0">
-                        <span class="font-bold ml-2 text-sm text-blue-400">Klasa M — 4,2 m (Bestseller Tandem)</span>
-                        <div class="text-xs text-slate-400 ml-6 flex justify-between mt-1">
-                            <span>DMC: 2 000 kg | 2 osie</span>
-                            <span>Klapa: 3 000 mm</span>
-                        </div>
-                    </label>
-
-                    <label class="block p-3 rounded-lg border border-slate-800 bg-slate-900 hover:border-blue-500 cursor-pointer transition">
-                        <input type="radio" name="platform" value="FTB-500-L" onchange="przeliczWszystko()" class="text-blue-600 focus:ring-0">
-                        <span class="font-bold ml-2 text-sm text-slate-200">Klasa L — 5,0 m (Pro Tandem)</span>
-                        <div class="text-xs text-slate-400 ml-6 flex justify-between mt-1">
-                            <span>DMC: 2 700 kg | 2 osie</span>
-                            <span>Klapa: 3 600 mm</span>
-                        </div>
-                    </label>
-
-                    <label class="block p-3 rounded-lg border border-slate-800 bg-slate-900 hover:border-blue-500 cursor-pointer transition">
-                        <input type="radio" name="platform" value="FTB-550-XL" onchange="przeliczWszystko()" class="text-blue-600 focus:ring-0">
-                        <span class="font-bold ml-2 text-sm text-slate-200">Klasa XL — 5,5 m (Heavy Event Tandem)</span>
-                        <div class="text-xs text-slate-400 ml-6 flex justify-between mt-1">
-                            <span>DMC: 3 500 kg | 2 osie</span>
-                            <span>Klapa: 4 000 mm</span>
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            <!-- WYPOSAŻENIE GASTRONOMICZNE -->
-            <div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2 mb-3">
-                    2. Wyposażenie Gastronomiczne
-                </h2>
-                <div class="space-y-2 text-sm">
-                    <label class="flex items-center space-x-2 bg-slate-900/60 p-2.5 rounded border border-slate-800 cursor-pointer">
-                        <input type="checkbox" id="agd-frytkownica" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                        <span class="text-xs text-slate-200">Frytkownica podwójna 2x8L (6.5 kW, 400V)</span>
-                    </label>
-                    <label class="flex items-center space-x-2 bg-slate-900/60 p-2.5 rounded border border-slate-800 cursor-pointer">
-                        <input type="checkbox" id="agd-grill" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                        <span class="text-xs text-slate-200">Płyta grillowa chromowana (3.0 kW, 230V)</span>
-                    </label>
-                    <label class="flex items-center space-x-2 bg-slate-900/60 p-2.5 rounded border border-slate-800 cursor-pointer">
-                        <input type="checkbox" id="agd-chlodnia" checked onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                        <span class="text-xs text-slate-200">Stół chłodniczy podblatowy Inox (0.3 kW, 230V)</span>
-                    </label>
-                    <label class="flex items-center space-x-2 bg-slate-900/60 p-2.5 rounded border border-slate-800 cursor-pointer">
-                        <input type="checkbox" id="agd-ekspres" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                        <span class="text-xs text-slate-200">Ekspres kolbowy 2-grupowy (3.3 kW, 230V)</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- UKŁAD HYDRAULICZNY SANEPID I OPCJE -->
-            <div>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 pb-2 mb-3">
-                    3. Standard Fabryczny & Opcje
-                </h2>
-                <div class="space-y-2 text-xs text-slate-400 bg-slate-900/40 p-3 rounded border border-slate-800/80">
-                    <div>• Moduł Sanepid 2-komorowy + podgrzewacz wody 10L</div>
-                    <div>• Instalacja pompowa ciśnieniowa 12V/230V + 2 kanistry 30L</div>
-                </div>
-                <div class="mt-3">
-                    <label class="flex items-center space-x-2 bg-slate-900/60 p-2 rounded border border-slate-800 cursor-pointer">
-                        <input type="checkbox" id="opcja-pv" onchange="przeliczWszystko()" class="rounded bg-slate-800 border-slate-700 text-blue-600">
-                        <span class="text-xs text-slate-200">Instalacja PV Marine ETFE + magazyn LiFePO4 (+24 kg)</span>
-                    </label>
-                </div>
-            </div>
-
+    <!-- PASEK POSTĘPU KROKÓW (WIZARD) -->
+    <div class="max-w-4xl mx-auto w-full px-4 pt-6 no-print">
+        <div class="flex justify-between items-center text-xs md:text-sm font-semibold border-b border-slate-800 pb-3">
+            <div id="step-tab-1" class="text-blue-400 border-b-2 border-blue-500 pb-1">1. Wybór Platformy</div>
+            <div id="step-tab-2" class="text-slate-500 pb-1">2. Dane Zlecenia</div>
+            <div id="step-tab-3" class="text-slate-500 pb-1">3. Wyposażenie & AGD</div>
+            <div id="step-tab-4" class="text-slate-500 pb-1">4. Podsumowanie & Druk</div>
         </div>
+    </div>
 
-        <!-- KOLUMNA 2 i 3: MONITOR PARAMETRÓW NA ŻYWO I NASTAWY WARSZTATOWE -->
-        <div class="lg:col-span-2 space-y-6">
+    <!-- GŁÓWNA PRZESTRZEŃ ROBOCZA -->
+    <main class="max-w-4xl mx-auto p-4 md:p-6 flex-grow w-full no-print">
+        
+        <!-- ================= KROK 1: WYBÓR PLATFORMY ================= -->
+        <section id="step-1" class="bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-6">
+            <div>
+                <h2 class="text-base font-bold text-white mb-1">Krok 1: Wybierz Wariant Podwozia i Długości Przyczepy</h2>
+                <p class="text-xs text-slate-400">Wybierz jeden z czterech ustandaryzowanych modeli platformy nośnej AL-KO / Knott.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="block p-4 rounded-xl border border-slate-800 bg-slate-900/80 hover:border-blue-500 cursor-pointer transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-sm text-slate-200">Klasa S — 3,5 m</span>
+                        <input type="radio" name="platform" value="FTB-350-S" class="text-blue-600 focus:ring-0">
+                    </div>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <div>• Układ osi: <strong>1 oś (Single Axle)</strong></div>
+                        <div>• DMC: <strong>1 350 kg</strong> | Masa pusta: ~720 kg</div>
+                        <div>• Otwór klapy: <strong>2 400 x 1 100 mm</strong></div>
+                    </div>
+                </label>
+
+                <label class="block p-4 rounded-xl border-2 border-blue-500/80 bg-slate-900 hover:border-blue-500 cursor-pointer transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-sm text-blue-400">Klasa M — 4,2 m (Bestseller)</span>
+                        <input type="radio" name="platform" value="FTB-420-M" checked class="text-blue-600 focus:ring-0">
+                    </div>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <div>• Układ osi: <strong>2 osie (Tandem)</strong></div>
+                        <div>• DMC: <strong>2 000 kg</strong> | Masa pusta: ~980 kg</div>
+                        <div>• Otwór klapy: <strong>3 000 x 1 100 mm</strong></div>
+                    </div>
+                </label>
+
+                <label class="block p-4 rounded-xl border border-slate-800 bg-slate-900/80 hover:border-blue-500 cursor-pointer transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-sm text-slate-200">Klasa L — 5,0 m</span>
+                        <input type="radio" name="platform" value="FTB-500-L" class="text-blue-600 focus:ring-0">
+                    </div>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <div>• Układ osi: <strong>2 osie (Tandem)</strong></div>
+                        <div>• DMC: <strong>2 700 kg</strong> | Masa pusta: ~1 180 kg</div>
+                        <div>• Otwór klapy: <strong>3 600 x 1 100 mm</strong></div>
+                    </div>
+                </label>
+
+                <label class="block p-4 rounded-xl border border-slate-800 bg-slate-900/80 hover:border-blue-500 cursor-pointer transition">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-sm text-slate-200">Klasa XL — 5,5 m</span>
+                        <input type="radio" name="platform" value="FTB-550-XL" class="text-blue-600 focus:ring-0">
+                    </div>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <div>• Układ osi: <strong>2 osie (Heavy Tandem)</strong></div>
+                        <div>• DMC: <strong>3 500 kg</strong> | Masa pusta: ~1 320 kg</div>
+                        <div>• Otwór klapy: <strong>4 000 x 1 100 mm</strong></div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="flex justify-end pt-4 border-t border-slate-800">
+                <button type="button" onclick="przejdzDoKroku(2)" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm flex items-center">
+                    Przejdź dalej &rarr;
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= KROK 2: DANE ZLECENIA I PŁYTY ================= -->
+        <section id="step-2" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-6">
+            <div>
+                <h2 class="text-base font-bold text-white mb-1">Krok 2: Uzupełnij Dane Zamówienia i Parametry Ścian</h2>
+                <p class="text-xs text-slate-400">Wprowadź oznaczenia produkcyjne, które pojawią się na kartach warsztatowych.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Numer Zlecenia / Projektu</label>
+                    <input type="text" id="in-nr-zlecenia" value="ZL/2026/FT-084" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Nazwa Klienta / Inwestora</label>
+                    <input type="text" id="in-klient" value="StreetFood Express Sp. z o.o." class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Grubość Płyty Sandwich (Ściany/Dach)</label>
+                    <select id="in-grubosc-sandwich" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none">
+                        <option value="40" selected>40 mm (Laminat GRP 1.5mm + Rdzeń XPS)</option>
+                        <option value="30">30 mm (Laminat GRP 1.5mm + Rdzeń XPS)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Kolor Poszycia Zewnętrznego (Laminat)</label>
+                    <input type="text" id="in-kolor" value="RAL 9010 (Biały Czysty) / Opcja oklejania" class="w-full bg-slate-900 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:border-blue-500 focus:outline-none">
+                </div>
+            </div>
+
+            <div class="flex justify-between pt-4 border-t border-slate-800">
+                <button type="button" onclick="przejdzDoKroku(1)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                    &larr; Wstecz
+                </button>
+                <button type="button" onclick="przejdzDoKroku(3)" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                    Przejdź do wyposażenia &rarr;
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= KROK 3: WYPOSAŻENIE I AGD ================= -->
+        <section id="step-3" class="hidden bg-slate-950 border border-slate-800 rounded-xl p-6 space-y-6">
+            <div>
+                <h2 class="text-base font-bold text-white mb-1">Krok 3: Wybór Urządzeń i Instalacji</h2>
+                <p class="text-xs text-slate-400">Zaznacz sprzęt ciągu roboczego. Silnik na bieżąco zbilansuje fazy L1/L2/L3 oraz obciążenie haka.</p>
+            </div>
+
+            <div class="space-y-3">
+                <label class="flex items-center justify-between p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="agd-frytkownica" checked class="rounded bg-slate-800 border-slate-700 text-blue-600">
+                        <div>
+                            <div class="text-sm font-semibold text-slate-200">Frytkownica podwójna 2x8L (YATO)</div>
+                            <div class="text-xs text-slate-400">Moc: 6.5 kW | Zasilanie: 400V (L1+L2) | Masa: 18.5 kg</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-amber-400">6.50 kW</span>
+                </label>
+
+                <label class="flex items-center justify-between p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="agd-grill" checked class="rounded bg-slate-800 border-slate-700 text-blue-600">
+                        <div>
+                            <div class="text-sm font-semibold text-slate-200">Płyta grillowa ryflowana chromowana (YATO)</div>
+                            <div class="text-xs text-slate-400">Moc: 3.0 kW | Zasilanie: 230V | Masa: 24.0 kg</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-amber-400">3.00 kW</span>
+                </label>
+
+                <label class="flex items-center justify-between p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="agd-chlodnia" checked class="rounded bg-slate-800 border-slate-700 text-blue-600">
+                        <div>
+                            <div class="text-sm font-semibold text-slate-200">Stół chłodniczy 2-drzwiowy z blatem Inox</div>
+                            <div class="text-xs text-slate-400">Moc: 0.25 kW | Zasilanie: 230V | Masa: 72.0 kg</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-amber-400">0.25 kW</span>
+                </label>
+
+                <label class="flex items-center justify-between p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="agd-ekspres" class="rounded bg-slate-800 border-slate-700 text-blue-600">
+                        <div>
+                            <div class="text-sm font-semibold text-slate-200">Ekspres ciśnieniowy kolbowy 2-grupowy (HENDI)</div>
+                            <div class="text-xs text-slate-400">Moc: 3.3 kW | Wymaga zasilania wody i odpływu | Masa: 55.0 kg</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-amber-400">3.30 kW</span>
+                </label>
+
+                <label class="flex items-center justify-between p-3 rounded-lg bg-slate-900 border border-slate-800 cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <input type="checkbox" id="opcja-pv" class="rounded bg-slate-800 border-slate-700 text-blue-600">
+                        <div>
+                            <div class="text-sm font-semibold text-slate-200">Pakiet Autonomii PV Marine ETFE + Bateria LiFePO4</div>
+                            <div class="text-xs text-slate-400">Panele elastyczne dachowe + regulator MPPT | Masa: 24.0 kg</div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400">ECO</span>
+                </label>
+            </div>
+
+            <div class="flex justify-between pt-4 border-t border-slate-800">
+                <button type="button" onclick="przejdzDoKroku(2)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                    &larr; Wstecz
+                </button>
+                <button type="button" onclick="przejdzDoKroku(4)" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                    Generuj Podsumowanie B2B &rarr;
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= KROK 4: PODSUMOWANIE I GENERATOR DOKUMENTACJI ================= -->
+        <section id="step-4" class="hidden space-y-6">
             
             <!-- KAFLE KONTROLNE -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
                     <span class="text-xs text-slate-400 uppercase tracking-wider">Masa Rzeczywista / DMC</span>
                     <div id="stat-masa" class="text-2xl font-bold text-emerald-400 mt-1">-- / -- kg</div>
-                    <span id="stat-zapas" class="text-xs text-slate-500">Zapas ładowności: -- kg</span>
+                    <span id="stat-zapas" class="text-xs text-slate-500">Zapas: -- kg</span>
                 </div>
                 <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
-                    <span class="text-xs text-slate-400 uppercase tracking-wider">Moc Przyłączeniowa</span>
+                    <span class="text-xs text-slate-400 uppercase tracking-wider">Moc Całkowita</span>
                     <div id="stat-moc" class="text-2xl font-bold text-amber-400 mt-1">-- kW</div>
-                    <span id="stat-przylacze" class="text-xs text-slate-500">Wymagane złącze CEE</span>
+                    <span id="stat-przylacze" class="text-xs text-slate-500">Złącze CEE</span>
                 </div>
                 <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
                     <span class="text-xs text-slate-400 uppercase tracking-wider">Nacisk na hak (S)</span>
                     <div id="stat-hak" class="text-2xl font-bold text-blue-400 mt-1">-- kg</div>
-                    <span id="stat-hak-procent" class="text-xs text-slate-500">Optymalny dla podwozia</span>
+                    <span id="stat-hak-procent" class="text-xs text-slate-500">W normie</span>
                 </div>
             </div>
 
-            <!-- BILANS FAZ L1, L2, L3 -->
+            <!-- BILANS FAZ L1-L3 -->
             <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl">
                 <div class="flex justify-between items-center mb-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Równoważenie Fazy L1 / L2 / L3 (Rozdzielnica DIN)</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Zbalansowanie Faz Rozdzielnicy (Hager 400V)</span>
                     <span id="stat-asymetria" class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Asymetria: 0.0 kW</span>
                 </div>
                 <div class="grid grid-cols-3 gap-3 font-mono text-center text-xs">
@@ -176,13 +268,13 @@
                 </div>
             </div>
 
-            <!-- NASTAWY DLA PIONOWEJ RAMY POCHYŁEJ -->
+            <!-- NASTAWY DLA PIŁY PIONOWEJ -->
             <div class="bg-slate-950 border border-slate-800 p-5 rounded-xl">
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="font-bold text-sm uppercase tracking-wider text-slate-200">
-                        Nastawy Zderzaków dla Pionowej Piły Panelowej (Ściana Sandwich)
+                        Karta Cięcia Ściany Sandwich — Nastawy Zderzaków Piły Pionowej
                     </h3>
-                    <span class="text-xs font-mono bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Punkt bazowy: Lewy dolny róg</span>
+                    <span class="text-xs font-mono bg-blue-500/20 text-blue-400 px-2 py-1 rounded">Baza (0,0): Lewy dół</span>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
@@ -190,23 +282,33 @@
                         <div class="text-amber-400 font-bold uppercase">1. Zderzaki Osi X (Belka pionowa):</div>
                         <div id="zderzak-x1">• Zderzak lewy (X1): -- mm</div>
                         <div id="zderzak-x2">• Zderzak prawy (X2): -- mm</div>
-                        <div id="szer-otworu">• Długość wycięcia klapy: -- mm</div>
+                        <div id="szer-otworu">• Długość okna klapy: -- mm</div>
                     </div>
 
                     <div class="bg-slate-900 p-3 rounded border border-slate-800 space-y-2">
                         <div class="text-amber-400 font-bold uppercase">2. Zderzaki Osi Y (Wózek piły):</div>
                         <div>• Zderzak dolny (Y1): 900 mm</div>
                         <div>• Zderzak górny (Y2): 2000 mm</div>
-                        <div>• Wysokość wycięcia: 1100 mm</div>
+                        <div>• Wysokość okna klapy: 1100 mm</div>
                     </div>
                 </div>
 
                 <div class="mt-3 bg-blue-950/30 border border-blue-900/50 p-2.5 rounded text-xs text-blue-300">
-                    <strong>Procedura warsztatowa:</strong> Nawiercić 4 otwory w narożach otwornicą fi 30 mm (R15). Wprowadzić piłę przez otwór i wykonać cztery proste cięcia pomiędzy zderzakami.
+                    <strong>Procedura technologiczna 4 otworów:</strong> Wyciąć 4 otwory w narożnikach otwornicą fi 30 mm (promień R15). Prowadzić tarczę piły od otworu do otworu wzdłuż nastaw zderzaków.
                 </div>
             </div>
 
-        </div>
+            <!-- PRZYCISKI STERUJĄCE -->
+            <div class="flex justify-between pt-4 border-t border-slate-800">
+                <button type="button" onclick="przejdzDoKroku(3)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-2.5 rounded-lg transition text-sm">
+                    &larr; Wróć do edycji
+                </button>
+                <button type="button" onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-2.5 rounded-lg transition text-sm flex items-center shadow">
+                    Drukuj / Pobierz Kartę Technologiczną PDF &darr;
+                </button>
+            </div>
+        </section>
+
     </main>
 
     <!-- ARKUSZ WYDRUKU WHITE LABEL (WIDOCZNY PO KLIKNIĘCIU DRUKUJ / ZAPISZ PDF) -->
@@ -214,8 +316,8 @@
         <div class="border-b-2 border-black pb-4 mb-6 flex justify-between items-center">
             <div>
                 <h1 class="text-xl font-bold uppercase tracking-wider">[ NAZWA TWOJEJ FIRMY / PRODUCENTA ]</h1>
-                <p class="text-sm">Karta Technologiczna Prefabrykacji i Montażu Przyczepy Gastronomicznej</p>
-                <p class="text-xs text-gray-500">ul. Przemysłowa 1, 00-000 Twoje Miasto | kontakt@twojadomena.pl</p>
+                <p class="text-sm font-semibold">Karta Technologiczna Prefabrykacji i Montażu Przyczepy Gastronomicznej</p>
+                <p class="text-xs text-gray-600">ul. Przemysłowa 1, 00-000 Twoje Miasto | kontakt@twojadomena.pl</p>
             </div>
             <div class="border-2 border-dashed border-gray-400 p-3 text-center text-xs font-bold text-gray-500 uppercase">
                 [ TWOJE LOGO ]
@@ -228,8 +330,16 @@
                 <th class="border border-gray-300 p-2 text-left">Wartość Wyliczona</th>
             </tr>
             <tr>
+                <td class="border border-gray-300 p-2 font-medium">Numer Zlecenia / Klient</td>
+                <td id="print-klient" class="border border-gray-300 p-2 font-bold">--</td>
+            </tr>
+            <tr>
                 <td class="border border-gray-300 p-2 font-medium">Wybrany Wariant Podwozia</td>
                 <td id="print-model" class="border border-gray-300 p-2 font-bold">--</td>
+            </tr>
+            <tr>
+                <td class="border border-gray-300 p-2 font-medium">Grubość Płyty Sandwich / Kolor</td>
+                <td id="print-sandwich" class="border border-gray-300 p-2">--</td>
             </tr>
             <tr>
                 <td class="border border-gray-300 p-2 font-medium">Masa Rzeczywista / DMC (Ładowność)</td>
@@ -268,18 +378,38 @@
             "FTB-550-XL": { nazwa: "Klasa XL (5,5 m) Heavy Tandem AL-KO/Knott", dmc: 3500, masaPusta: 1320, osie: 2, x1: 750, dlugoscKlapy: 4000 }
         };
 
+        // Funkcja przełączania kroków w kreatorze
+        function przejdzDoKroku(nrKroku) {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`step-${i}`).classList.add('hidden');
+                const tab = document.getElementById(`step-tab-${i}`);
+                tab.classList.remove('text-blue-400', 'border-b-2', 'border-blue-500');
+                tab.classList.add('text-slate-500');
+            }
+
+            document.getElementById(`step-${nrKroku}`).classList.remove('hidden');
+            const aktywnyTab = document.getElementById(`step-tab-${nrKroku}`);
+            aktywnyTab.classList.remove('text-slate-500');
+            aktywnyTab.classList.add('text-blue-400', 'border-b-2', 'border-blue-500');
+
+            if (nrKroku === 4) {
+                przeliczWszystko();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Funkcja przeliczania parametrów technicznych
         function przeliczWszystko() {
-            // 1. Pobranie zaznaczonej platformy
             const wybranaKlucz = document.querySelector('input[name="platform"]:checked').value;
             const p = DANE_PLATFORM[wybranaKlucz];
 
-            // 2. Kalkulacja mas
-            let masa = p.masaPusta + 22 + 14 + 30; // standard: woda (22kg) + elektryka (14kg) + woda w kanistrze (30kg)
+            // 1. Masy bazowe
+            let masa = p.masaPusta + 22 + 14 + 30; // moduł Sanepid + szafka elektryczna + woda w kanistrze
             
             // Fazy (kW)
-            let fazaL1 = 0.2; // LED + pompa
-            let fazaL2 = 1.5; // Bojler
-            let fazaL3 = 0.35; // Chłodzenie stałe
+            let fazaL1 = 0.2; // LED + pompa wody
+            let fazaL2 = 1.5; // Bojler wody
+            let fazaL3 = 0.35; // Chłodzenie bazowe
 
             if (document.getElementById('agd-frytkownica').checked) {
                 masa += 18.5;
@@ -306,19 +436,25 @@
             const wspolczynnikHaka = p.osie === 1 ? 0.07 : 0.055;
             const hakKg = Math.round(masa * wspolczynnikHaka);
 
-            // 3. Obliczenia elektryczne
+            // 2. Obliczenia elektryczne
             const mocCalkowita = (fazaL1 + fazaL2 + fazaL3).toFixed(2);
             const maxFaza = Math.max(fazaL1, fazaL2, fazaL3);
             const minFaza = Math.min(fazaL1, fazaL2, fazaL3);
             const asymetria = (maxFaza - minFaza).toFixed(2);
 
-            // 4. Nastawy piły pionowej
+            // 3. Nastawy piły pionowej
             const x1 = p.x1;
             const x2 = p.x1 + p.dlugoscKlapy;
 
-            // 5. Aktualizacja interfejsu (Dashboard)
+            // 4. Dane tekstowe z formularza kroku 2
+            const nrZlecenia = document.getElementById('in-nr-zlecenia').value;
+            const klient = document.getElementById('in-klient').value;
+            const gruboscSandwich = document.getElementById('in-grubosc-sandwich').value;
+            const kolor = document.getElementById('in-kolor').value;
+
+            // 5. Aktualizacja UI w kroku 4
             document.getElementById('stat-masa').innerText = `${Math.round(masa)} / ${p.dmc} kg`;
-            document.getElementById('stat-zapas').innerText = `Zapas ładowności: ${zapas} kg`;
+            document.getElementById('stat-zapas').innerText = `Zapas: ${zapas} kg`;
             document.getElementById('stat-moc').innerText = `${mocCalkowita} kW`;
             document.getElementById('stat-przylacze').innerText = mocCalkowita > 11 ? "Wymagane: CEE 400V 32A" : "Wymagane: CEE 400V 16A";
             document.getElementById('stat-hak').innerText = `${hakKg} kg`;
@@ -330,4 +466,19 @@
             document.getElementById('stat-asymetria').innerText = `Asymetria: ${asymetria} kW`;
 
             document.getElementById('zderzak-x1').innerText = `• Zderzak lewy (X1): ${x1} mm`;
-          
+            document.getElementById('zderzak-x2').innerText = `• Zderzak prawy (X2): ${x2} mm`;
+            document.getElementById('szer-otworu').innerText = `• Długość okna klapy: ${p.dlugoscKlapy} mm`;
+
+            // 6. Aktualizacja arkusza wydruku
+            document.getElementById('print-klient').innerText = `${nrZlecenia} | ${klient}`;
+            document.getElementById('print-model').innerText = p.nazwa;
+            document.getElementById('print-sandwich').innerText = `Grubość: ${gruboscSandwich} mm | Kolor: ${kolor}`;
+            document.getElementById('print-masa').innerText = `${Math.round(masa)} kg / ${p.dmc} kg (Zapas: ${zapas} kg)`;
+            document.getElementById('print-hak').innerText = `${hakKg} kg`;
+            document.getElementById('print-moc').innerText = `${mocCalkowita} kW (${mocCalkowita > 11 ? 'CEE 400V 32A' : 'CEE 400V 16A'})`;
+            document.getElementById('print-fazy').innerText = `L1: ${fazaL1.toFixed(2)} kW | L2: ${fazaL2.toFixed(2)} kW | L3: ${fazaL3.toFixed(2)} kW`;
+            document.getElementById('print-pila').innerText = `X1=${x1} mm, X2=${x2} mm | Y1=900 mm, Y2=2000 mm (Otwór: ${p.dlugoscKlapy}x1100 mm)`;
+        }
+    </script>
+</body>
+</html>
